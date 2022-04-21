@@ -1030,9 +1030,6 @@
   "failureMessage": {
     "message": "문제가 발생했습니다. 작업을 완료할 수 없습니다."
   },
-  "fakeTokenWarning": {
-    "message": "기존 토큰의 가짜 버전 생성을 포함하여 누구나 토큰을 생성할 수 있습니다. $1에 대해 자세히 알아보기"
-  },
   "fast": {
     "message": "빠름"
   },
@@ -2983,9 +2980,6 @@
   "tokenDecimalFetchFailed": {
     "message": "토큰 소수자리 필요"
   },
-  "tokenDetectionAnnouncement": {
-    "message": "신규! 개선된 토큰 감지는 실험적 기능으로 이더리움 메인넷에서 사용할 수 있습니다. $1"
-  },
   "tokenSymbol": {
     "message": "토큰 기호"
   },
@@ -3198,12 +3192,6 @@
   },
   "usePhishingDetectionDescription": {
     "message": "이더리움 사용자를 노리는 피싱 도메인에 대한 경고를 표시합니다"
-  },
-  "useTokenDetection": {
-    "message": "토큰 감지 사용"
-  },
-  "useTokenDetectionDescription": {
-    "message": "당사는 타사 API를 사용하여 지갑으로 전송된 새 토큰을 감지하고 표시합니다. MetaMask가 해당 서비스에서 데이터를 가져오는 것을 원하지 않으면 이 기능을 사용하지 마세요."
   },
   "usedByClients": {
     "message": "다양한 클라이언트에서 사용합니다."

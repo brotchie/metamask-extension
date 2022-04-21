@@ -1030,9 +1030,6 @@
   "failureMessage": {
     "message": "Nagkaproblema, at hindi namin makumpleto ang aksyon"
   },
-  "fakeTokenWarning": {
-    "message": "Sinuman ay maaaring gumawa ng token, kabilang ang paggawa ng mga pekeng bersyon ng mga umiiral na token. Alamin pa ang tungkol sa $1"
-  },
   "fast": {
     "message": "Mabilis"
   },
@@ -2983,9 +2980,6 @@
   "tokenDecimalFetchFailed": {
     "message": "Kailangan ng token decimal."
   },
-  "tokenDetectionAnnouncement": {
-    "message": "Bago! Ang pinahusay na pagtukoy ng token ay magagamit sa Ethereum Mainnet bilang isang pang-eksperimentong feature. $1"
-  },
   "tokenSymbol": {
     "message": "Simbolo ng Token"
   },
@@ -3198,12 +3192,6 @@
   },
   "usePhishingDetectionDescription": {
     "message": "Magpakita ng babala para sa mga phishing domain na nagta-target sa mga user ng Ethereum"
-  },
-  "useTokenDetection": {
-    "message": "Gamitin ang Pag-detect ng Token"
-  },
-  "useTokenDetectionDescription": {
-    "message": "Gumagamit kami ng mga third-party na API para makita at magpakita ng mga bagong token na ipinadala sa iyong wallet. I-off kung ayaw mong makuha ng MetaMask ang data mula sa mga serbisyong iyon."
   },
   "usedByClients": {
     "message": "Ginagamit ng iba't ibang client"

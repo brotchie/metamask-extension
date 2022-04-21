@@ -1030,9 +1030,6 @@
   "failureMessage": {
     "message": "Ada yang salah, dan kami tidak dapat menyelesaikan tindakan"
   },
-  "fakeTokenWarning": {
-    "message": "Siapa pun dapat membuat token, termasuk membuat versi palsu dari token yang ada. Pelajari selengkapnya seputar $1"
-  },
   "fast": {
     "message": "Cepat"
   },
@@ -2983,9 +2980,6 @@
   "tokenDecimalFetchFailed": {
     "message": "Desimal token diperlukan."
   },
-  "tokenDetectionAnnouncement": {
-    "message": "Baru! Deteksi token yang ditingkatkan tersedia di Ethereum Mainnet sebagai fitur eksperimental. $1"
-  },
   "tokenSymbol": {
     "message": "Simbol Token"
   },
@@ -3198,12 +3192,6 @@
   },
   "usePhishingDetectionDescription": {
     "message": "Menampilkan peringatan untuk domain pengelabuan yang menargetkan pengguna Ethereum"
-  },
-  "useTokenDetection": {
-    "message": "Gunakan Deteksi Token"
-  },
-  "useTokenDetectionDescription": {
-    "message": "Kami menggunakan API pihak ketiga untuk mendeteksi dan menampilkan token baru yang dikirim ke dompet Anda. Matikan jika Anda tidak ingin MetaMask memakai data dari layanan tersebut."
   },
   "usedByClients": {
     "message": "Digunakan oleh berbagai klien yang berbeda"

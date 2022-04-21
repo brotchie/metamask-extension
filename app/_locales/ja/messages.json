@@ -1030,9 +1030,6 @@
   "failureMessage": {
     "message": "問題が発生しました。アクションを完了させることができません"
   },
-  "fakeTokenWarning": {
-    "message": "既存のトークンの偽のバージョンの作成を含め、誰でもトークンを作成できます。$1に関する詳細をご覧ください"
-  },
   "fast": {
     "message": "高速"
   },
@@ -2983,9 +2980,6 @@
   "tokenDecimalFetchFailed": {
     "message": "トークンの10進数が必要です。"
   },
-  "tokenDetectionAnnouncement": {
-    "message": "新機能! 実験的な機能として、Ethereum Mainnetでのトークン検出が改善されました。$1"
-  },
   "tokenSymbol": {
     "message": "トークンシンボル"
   },
@@ -3198,12 +3192,6 @@
   },
   "usePhishingDetectionDescription": {
     "message": "イーサリアムユーザーを対象としたドメインのフィッシングに対して警告を表示します"
-  },
-  "useTokenDetection": {
-    "message": "トークン検出を使用"
-  },
-  "useTokenDetectionDescription": {
-    "message": "弊社はユーザーのウォレットに送信された新しいトークンを検出して表示するために、サードパーティーAPIを使用します。MetaMaskにこれらのサービスからデータを取得させたくない場合は、この機能をオフにしてください。"
   },
   "usedByClients": {
     "message": "さまざまな異なるクライアントによって使用されています"

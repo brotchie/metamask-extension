@@ -1030,9 +1030,6 @@
   "failureMessage": {
     "message": "Đã xảy ra sự cố và chúng tôi không thể hoàn tất hành động"
   },
-  "fakeTokenWarning": {
-    "message": "Bất kỳ ai cũng có thể tạo token, bao gồm cả phiên bản giả mạo của các token hiện tại. Tìm hiểu thêm về $1"
-  },
   "fast": {
     "message": "Nhanh"
   },
@@ -2983,9 +2980,6 @@
   "tokenDecimalFetchFailed": {
     "message": "Cần có số thập phân của token."
   },
-  "tokenDetectionAnnouncement": {
-    "message": "Mới! Tính năng phát hiện token được cải tiến hiện đã có sẵn trên Mạng chính thức của Ethereum dưới dạng một tính năng thử nghiệm. $1"
-  },
   "tokenSymbol": {
     "message": "Ký hiệu token"
   },
@@ -3198,12 +3192,6 @@
   },
   "usePhishingDetectionDescription": {
     "message": "Hiển thị cảnh báo đối với các tên miền lừa đảo nhắm đến người dùng Ethereum"
-  },
-  "useTokenDetection": {
-    "message": "Sử Dụng Phát Hiện Token"
-  },
-  "useTokenDetectionDescription": {
-    "message": "Chúng tôi sử dụng API của bên thứ ba để phát hiện và hiển thị các token mới được gửi vào ví của bạn. Hãy tắt tính năng này nếu bạn không muốn MetaMask lấy dữ liệu từ các dịch vụ đó."
   },
   "usedByClients": {
     "message": "Được nhiều ví khác nhau sử dụng"
