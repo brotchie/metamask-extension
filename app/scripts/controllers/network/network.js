@@ -126,8 +126,8 @@ export default class NetworkController extends EventEmitter {
 
   initializeProvider(providerParams) {
     this._baseProviderParams = providerParams;
-    const { type, rpcUrl, chainId } = this.getProviderConfig();
-    this._configureProvider({ type, rpcUrl, chainId });
+    const { type, rpcUrl, chainId, rpcPrefs } = this.getProviderConfig();
+    this._configureProvider({ type, rpcUrl, chainId, rpcPrefs });
     this.lookupNetwork();
   }
 
@@ -401,14 +401,14 @@ export default class NetworkController extends EventEmitter {
     this.emit(NETWORK_EVENTS.NETWORK_DID_CHANGE, opts.type);
   }
 
-  _configureProvider({ type, rpcUrl, chainId }) {
+  _configureProvider({ type, rpcUrl, chainId, rpcPrefs }) {
     // infura type-based endpoints
     const isInfura = INFURA_PROVIDER_TYPES.includes(type);
     if (isInfura) {
       this._configureInfuraProvider(type, this._infuraProjectId);
       // url-based rpc endpoints
     } else if (type === NETWORK_TYPE_RPC) {
-      this._configureStandardProvider(rpcUrl, chainId);
+      this._configureStandardProvider(rpcUrl, chainId, rpcPrefs);
     } else {
       throw new Error(
         `NetworkController - _configureProvider - unknown type "${type}"`,
@@ -425,9 +425,9 @@ export default class NetworkController extends EventEmitter {
     this._setNetworkClient(networkClient);
   }
 
-  _configureStandardProvider(rpcUrl, chainId) {
+  _configureStandardProvider(rpcUrl, chainId, rpcPrefs) {
     log.info('NetworkController - configureStandardProvider', rpcUrl);
-    const networkClient = createJsonRpcClient({ rpcUrl, chainId });
+    const networkClient = createJsonRpcClient({ rpcUrl, chainId, rpcPrefs });
     this._setNetworkClient(networkClient);
   }
 

@@ -8,10 +8,16 @@ const fetchWithTimeout = getFetchWithTimeout();
  * @param {string} rpcUrl - The RPC endpoint URL to target.
  * @param {string} rpcMethod - The RPC method to request.
  * @param {Array<unknown>} [rpcParams] - The RPC method params.
+ * @param {{sendCredentials?: bool}} [options] - Additional options for fetch.
  * @returns {Promise<unknown|undefined>} Returns the result of the RPC method call,
  * or throws an error in case of failure.
  */
-export async function jsonRpcRequest(rpcUrl, rpcMethod, rpcParams = []) {
+export async function jsonRpcRequest(
+  rpcUrl,
+  rpcMethod,
+  rpcParams = [],
+  options = {},
+) {
   let fetchUrl = rpcUrl;
   const headers = {
     'Content-Type': 'application/json',
@@ -26,6 +32,18 @@ export async function jsonRpcRequest(rpcUrl, rpcMethod, rpcParams = []) {
     headers.Authorization = `Basic ${encodedAuth}`;
     fetchUrl = `${origin}${pathname}${search}`;
   }
+  if (options.sendCredentials === true) {
+    // If this network requires cookies, then pre-flight a non-cors
+    // request to the url to ensure cookies are refreshed
+    try {
+      await fetch(fetchUrl, {
+        credentials: 'include',
+        mode: 'no-cors',
+      });
+    } catch (_) {
+      // Eat any exceptions for the pre-flight request
+    }
+  }
   const jsonRpcResponse = await fetchWithTimeout(fetchUrl, {
     method: 'POST',
     body: JSON.stringify({
@@ -36,6 +54,7 @@ export async function jsonRpcRequest(rpcUrl, rpcMethod, rpcParams = []) {
     }),
     headers,
     cache: 'default',
+    credentials: options.sendCredentials ? 'include' : 'same-origin',
   }).then((httpResponse) => httpResponse.json());
 
   if (

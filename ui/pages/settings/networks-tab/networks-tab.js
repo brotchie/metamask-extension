@@ -63,6 +63,7 @@ const NetworksTab = ({ addNewNetwork }) => {
       chainId: rpc.chainId,
       ticker: rpc.ticker,
       blockExplorerUrl: rpc.rpcPrefs?.blockExplorerUrl || '',
+      sendCredentials: rpc.rpcPrefs?.sendCredentials || false,
       isATestNetwork: TEST_CHAINS.includes(rpc.chainId),
     };
   });

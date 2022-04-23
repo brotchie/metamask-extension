@@ -19,7 +19,14 @@ import {
 } from '../../../../../shared/modules/network.utils';
 import { jsonRpcRequest } from '../../../../../shared/modules/rpc.utils';
 import ActionableMessage from '../../../../components/ui/actionable-message';
+import Typography from '../../../../components/ui/typography/typography';
 import Button from '../../../../components/ui/button';
+import ToggleButton from '../../../../components/ui/toggle-button';
+import {
+  DISPLAY,
+  TYPOGRAPHY,
+  FONT_WEIGHT,
+} from '../../../../helpers/constants/design-system';
 import FormField from '../../../../components/ui/form-field';
 import { decimalToHex } from '../../../../helpers/utils/conversions.util';
 import {
@@ -98,6 +105,9 @@ const NetworksForm = ({
   const [blockExplorerUrl, setBlockExplorerUrl] = useState(
     selectedNetwork?.blockExplorerUrl || '',
   );
+  const [sendCredentials, setSendCredentials] = useState(
+    selectedNetwork?.sendCredentials || false,
+  );
   const [errors, setErrors] = useState({});
   const [warnings, setWarnings] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -111,6 +121,7 @@ const NetworksForm = ({
     setChainId(getDisplayChainId(selectedNetwork.chainId));
     setTicker(selectedNetwork?.ticker);
     setBlockExplorerUrl(selectedNetwork?.blockExplorerUrl);
+    setSendCredentials(selectedNetwork?.sendCredentials);
     setErrors({});
     setWarnings({});
     setIsSubmitting(false);
@@ -129,7 +140,8 @@ const NetworksForm = ({
       chainIdIsUnchanged &&
       ticker === selectedNetwork.ticker &&
       networkName === selectedNetworkName &&
-      blockExplorerUrl === selectedNetwork.blockExplorerUrl
+      blockExplorerUrl === selectedNetwork.blockExplorerUrl &&
+      sendCredentials === selectedNetwork.sendCredentials
     );
   };
 
@@ -139,6 +151,7 @@ const NetworksForm = ({
   const prevRpcUrl = useRef();
   const prevTicker = useRef();
   const prevBlockExplorerUrl = useRef();
+  const prevSendCredentials = useRef();
   useEffect(() => {
     if (!prevAddNewNetwork.current && addNewNetwork) {
       setNetworkName('');
@@ -146,6 +159,7 @@ const NetworksForm = ({
       setChainId('');
       setTicker('');
       setBlockExplorerUrl('');
+      setSendCredentials(false);
       setErrors({});
       setIsSubmitting(false);
     } else if (
@@ -153,7 +167,8 @@ const NetworksForm = ({
       prevRpcUrl.current !== selectedNetwork.rpcUrl ||
       prevChainId.current !== selectedNetwork.chainId ||
       prevTicker.current !== selectedNetwork.ticker ||
-      prevBlockExplorerUrl.current !== selectedNetwork.blockExplorerUrl
+      prevBlockExplorerUrl.current !== selectedNetwork.blockExplorerUrl ||
+      prevSendCredentials.current !== selectedNetwork.sendCredentials
     ) {
       resetForm(selectedNetwork);
     }
@@ -166,6 +181,7 @@ const NetworksForm = ({
     setChainId,
     setTicker,
     setBlockExplorerUrl,
+    setSendCredentials,
     setErrors,
     setIsSubmitting,
     resetForm,
@@ -178,6 +194,7 @@ const NetworksForm = ({
       setChainId('');
       setTicker('');
       setBlockExplorerUrl('');
+      setSendCredentials(false);
       setErrors({});
       dispatch(setSelectedSettingsRpcUrl(''));
     };
@@ -187,6 +204,7 @@ const NetworksForm = ({
     setChainId,
     setTicker,
     setBlockExplorerUrl,
+    setSendCredentials,
     setErrors,
     dispatch,
   ]);
@@ -279,7 +297,9 @@ const NetworksForm = ({
       let providerError;
 
       try {
-        endpointChainId = await jsonRpcRequest(rpcUrl, 'eth_chainId');
+        endpointChainId = await jsonRpcRequest(rpcUrl, 'eth_chainId', [], {
+          sendCredentials,
+        });
       } catch (err) {
         log.warn('Failed to fetch the chainId from the endpoint.', err);
         providerError = err;
@@ -500,6 +520,7 @@ const NetworksForm = ({
             {
               ...rpcPrefs,
               blockExplorerUrl: blockExplorerUrl || rpcPrefs?.blockExplorerUrl,
+              sendCredentials,
             },
           ),
         );
@@ -508,6 +529,7 @@ const NetworksForm = ({
           updateAndSetCustomRpc(rpcUrl, prefixedChainId, ticker, networkName, {
             ...rpcPrefs,
             blockExplorerUrl: blockExplorerUrl || rpcPrefs?.blockExplorerUrl,
+            sendCredentials,
           }),
         );
       }
@@ -646,6 +668,21 @@ const NetworksForm = ({
           value={blockExplorerUrl}
           disabled={viewOnly}
           autoFocus={window.location.hash.split('#')[2] === 'blockExplorerUrl'}
+        />
+        <Typography
+          tag={TYPOGRAPHY.H6}
+          fontWeight={FONT_WEIGHT.BOLD}
+          variant={TYPOGRAPHY.H6}
+          boxProps={{ display: DISPLAY.INLINE_BLOCK }}
+        >
+          Send Credentials to RPC Endpoint
+        </Typography>
+        <ToggleButton
+          onToggle={() => setSendCredentials(!sendCredentials)}
+          value={sendCredentials}
+          onLabel="Send"
+          offLabel="Don't send"
+          disabled={viewOnly}
         />
       </div>
       <div

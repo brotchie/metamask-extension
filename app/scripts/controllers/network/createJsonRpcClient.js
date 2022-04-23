@@ -16,8 +16,11 @@ const getTestMiddlewares = () => {
   return inTest ? [createEstimateGasDelayTestMiddleware()] : [];
 };
 
-export default function createJsonRpcClient({ rpcUrl, chainId }) {
-  const fetchMiddleware = createFetchMiddleware({ rpcUrl });
+export default function createJsonRpcClient({ rpcUrl, chainId, rpcPrefs }) {
+  const fetchMiddleware = createFetchMiddleware({
+    rpcUrl,
+    options: { sendCredentials: rpcPrefs?.sendCredentials },
+  });
   const blockProvider = providerFromMiddleware(fetchMiddleware);
   const blockTracker = new PollingBlockTracker({
     ...blockTrackerOpts,

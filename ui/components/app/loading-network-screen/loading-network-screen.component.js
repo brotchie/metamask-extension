@@ -28,7 +28,7 @@ export default class LoadingNetworkScreen extends PureComponent {
   componentDidMount = () => {
     this.cancelCallTimeout = setTimeout(
       this.cancelCall,
-      this.props.cancelTime || SECOND * 15,
+      this.props.cancelTime || SECOND * 5,
     );
   };
 
@@ -125,20 +125,22 @@ export default class LoadingNetworkScreen extends PureComponent {
     const { rollbackToPreviousProvider } = this.props;
 
     return (
-      <LoadingScreen
-        header={
-          <div
-            className="page-container__header-close"
-            onClick={rollbackToPreviousProvider}
-          />
-        }
-        showLoadingSpinner={!this.state.showErrorScreen}
-        loadingMessage={
-          this.state.showErrorScreen
-            ? this.renderErrorScreenContent()
-            : this.getConnectingLabel(this.props.loadingMessage)
-        }
-      />
+      <div>
+        <LoadingScreen
+          header={
+            <div
+              className="page-container__header-close"
+              onClick={rollbackToPreviousProvider}
+            />
+          }
+          showLoadingSpinner={!this.state.showErrorScreen}
+          loadingMessage={
+            this.state.showErrorScreen
+              ? this.renderErrorScreenContent()
+              : this.getConnectingLabel(this.props.loadingMessage)
+          }
+        />
+      </div>
     );
   }
 }

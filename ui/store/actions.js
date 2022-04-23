@@ -2122,10 +2122,25 @@ export function editRpc(
   };
 }
 
-export function setRpcTarget(newRpc, chainId, ticker = 'ETH', nickname) {
+export function setRpcTarget(
+  newRpc,
+  chainId,
+  ticker = 'ETH',
+  nickname,
+  rpcPrefs,
+) {
   return async (dispatch) => {
     log.debug(
-      `background.setRpcTarget: ${newRpc} ${chainId} ${ticker} ${nickname}`,
+      `background.setRpcTarget: ${newRpc} ${chainId} ${ticker} ${nickname} ${rpcPrefs}`,
+    );
+
+    console.log(
+      'actions.setRpcTarget',
+      newRpc,
+      chainId,
+      ticker,
+      nickname,
+      rpcPrefs,
     );
 
     try {
@@ -2134,6 +2149,7 @@ export function setRpcTarget(newRpc, chainId, ticker = 'ETH', nickname) {
         chainId,
         ticker,
         nickname || newRpc,
+        rpcPrefs || {},
       );
     } catch (error) {
       log.error(error);

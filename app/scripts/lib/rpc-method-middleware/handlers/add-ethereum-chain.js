@@ -63,11 +63,14 @@ async function addEthereumChainHandler(
     rpcUrls,
   } = req.params[0];
 
+  const sendCredentials = Boolean(req.params[0].sendCredentials);
+
   const otherKeys = Object.keys(
     omit(req.params[0], [
       'chainId',
       'chainName',
       'blockExplorerUrls',
+      'sendCredentials',
       'iconUrls',
       'rpcUrls',
       'nativeCurrency',
@@ -194,7 +197,14 @@ async function addEthereumChainHandler(
   let endpointChainId;
 
   try {
-    endpointChainId = await jsonRpcRequest(firstValidRPCUrl, 'eth_chainId');
+    endpointChainId = await jsonRpcRequest(
+      firstValidRPCUrl,
+      'eth_chainId',
+      [],
+      {
+        sendCredentials: sendCredentials === true,
+      },
+    );
   } catch (err) {
     return end(
       ethErrors.rpc.internal({
@@ -285,6 +295,7 @@ async function addEthereumChainHandler(
           chainName: _chainName,
           rpcUrl: firstValidRPCUrl,
           ticker,
+          sendCredentials,
         },
       }),
     );
@@ -336,6 +347,7 @@ async function addEthereumChainHandler(
           chainId: _chainId,
           nickname: _chainName,
           ticker,
+          sendCredentials,
         },
       }),
     );

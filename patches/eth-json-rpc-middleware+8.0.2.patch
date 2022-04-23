@@ -1,0 +1,71 @@
+diff --git a/node_modules/eth-json-rpc-middleware/dist/fetch.js b/node_modules/eth-json-rpc-middleware/dist/fetch.js
+index c20fedb..52b8a03 100644
+--- a/node_modules/eth-json-rpc-middleware/dist/fetch.js
++++ b/node_modules/eth-json-rpc-middleware/dist/fetch.js
+@@ -17,12 +17,14 @@ const RETRIABLE_ERRORS = [
+     // ignore errors where http req failed to establish
+     'Failed to fetch',
+ ];
+-function createFetchMiddleware({ rpcUrl, originHttpHeaderKey, }) {
++const POSSIBLE_CORS_ERROR = 'Failed to fetch';
++function createFetchMiddleware({ rpcUrl, originHttpHeaderKey, options }) {
+     return (0, json_rpc_engine_1.createAsyncMiddleware)(async (req, res, _next) => {
+         const { fetchUrl, fetchParams } = createFetchConfigFromReq({
+             req,
+             rpcUrl,
+             originHttpHeaderKey,
++            options,
+         });
+         // attempt request multiple times
+         const maxAttempts = 5;
+@@ -32,6 +34,7 @@ function createFetchMiddleware({ rpcUrl, originHttpHeaderKey, }) {
+                 const fetchRes = await fetch(fetchUrl, fetchParams);
+                 // check for http errrors
+                 checkForHttpErrors(fetchRes);
++                console.log(fetchRes.status);
+                 // parse response body
+                 const rawBody = await fetchRes.text();
+                 let fetchBody;
+@@ -49,10 +52,23 @@ function createFetchMiddleware({ rpcUrl, originHttpHeaderKey, }) {
+             catch (err) {
+                 const errMsg = err.toString();
+                 const isRetriable = RETRIABLE_ERRORS.some((phrase) => errMsg.includes(phrase));
++                const isPossibleCorsError = errMsg.includes(POSSIBLE_CORS_ERROR);
+                 // re-throw error if not retriable
+                 if (!isRetriable) {
+                     throw err;
+                 }
++                // when we suspect a CORS error and the user has indicated
++                // this network needs auth cookies, then try a simple non CORS
++                // request to refresh cookies, we'll just eat any eror that
++                // happens here
++                if (isPossibleCorsError && options.sendCredentials === true) {
++                    try {
++                        await fetch(fetchUrl, {
++                            credentials: 'include',
++                            mode: 'no-cors',
++                        });
++                    } catch(_) {}
++                }
+             }
+             // delay before retrying
+             await timeout(retryInterval);
+@@ -91,7 +107,7 @@ function parseResponse(fetchRes, body) {
+     // return successful result
+     return body.result;
+ }
+-function createFetchConfigFromReq({ req, rpcUrl, originHttpHeaderKey, }) {
++function createFetchConfigFromReq({ req, rpcUrl, originHttpHeaderKey, options }) {
+     const parsedUrl = new URL(rpcUrl);
+     const fetchUrl = normalizeUrlFromParsed(parsedUrl);
+     // prepare payload
+@@ -114,7 +130,9 @@ function createFetchConfigFromReq({ req, rpcUrl, originHttpHeaderKey, }) {
+             'Content-Type': 'application/json',
+         },
+         body: serializedPayload,
++        credentials: options.sendCredentials ? 'include' : 'same-origin',
+     };
++    console.log(fetchParams);
+     // encoded auth details as header (not allowed in fetch url)
+     if (parsedUrl.username && parsedUrl.password) {
+         const authString = `${parsedUrl.username}:${parsedUrl.password}`;

@@ -3698,6 +3698,7 @@ export default class MetamaskController extends EventEmitter {
           ticker,
           chainName,
           rpcUrl,
+          sendCredentials,
         } = {}) => {
           await this.preferencesController.addToFrequentRpcList(
             rpcUrl,
@@ -3706,6 +3707,7 @@ export default class MetamaskController extends EventEmitter {
             chainName,
             {
               blockExplorerUrl,
+              sendCredentials,
             },
           );
         },
@@ -3719,12 +3721,19 @@ export default class MetamaskController extends EventEmitter {
         setProviderType: this.networkController.setProviderType.bind(
           this.networkController,
         ),
-        updateRpcTarget: ({ rpcUrl, chainId, ticker, nickname }) => {
+        updateRpcTarget: ({
+          rpcUrl,
+          chainId,
+          ticker,
+          nickname,
+          sendCredentials,
+        }) => {
           this.networkController.setRpcTarget(
             rpcUrl,
             chainId,
             ticker,
             nickname,
+            { sendCredentials },
           );
         },
 
